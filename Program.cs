@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,14 +21,20 @@ namespace BlackJack
             Queue<Card> Pack1 = CreatePack();
             Queue<Card> Pack2 = CreatePack();
             Pack1 = Scramble(Pack1, Pack2);
-           // for (int i = 0; i < 52; i++)
-           // {
+            // for (int i = 0; i < 52; i++)
+            // {
             //    Console.WriteLine(Pack1.Dequeue().ToString());
-           // }
+            // }
             Console.ReadLine();
-            for (int i = 0; i < Pack1.ToArray().Length; i++)
+            Card[] Pack3= Pack1.ToArray();
+            for (int i = 0; i < Pack3.Length; i++)
             {
                 Console.WriteLine(Pack1.Dequeue().ToString());
+            }
+            //Menu();
+            while (Turn())
+            {
+                //put in if and break call Check
             }
 
         }
@@ -40,7 +46,7 @@ namespace BlackJack
             {
                 for (int col = 0; col < 13; col++)
                 {
-                    switch(row)
+                    switch (row)
                     {
                         case 0:
                             cardSymbol = Symbol.heart;
@@ -65,24 +71,24 @@ namespace BlackJack
         {
             Random rnd = new Random();
             Queue<Card> Spack = new Queue<Card>();
-            for (int i = Pack.Length; i !=0; i--)
+            for (int i = Pack.Length; i != 0; i--)
             {
                 int x = rnd.Next(0, i);
                 Spack.Enqueue(Pack[x]);
-                for (int y = x; y < i-1; y++)
-                    Pack[y] = Pack[y + 1]; 
+                for (int y = x; y < i - 1; y++)
+                    Pack[y] = Pack[y + 1];
             }
             return Spack;
         }
-        static Queue<Card> Scramble(Queue<Card> Pack,Queue<Card> Pack1)
+        static Queue<Card> Scramble(Queue<Card> Pack, Queue<Card> Pack1)
         {
             Queue<Card> SPacks = new Queue<Card>();
             Card[] arrPack1 = Pack1.ToArray();
             Card[] arrPack = Pack.ToArray();
             for (int i = 0; i < arrPack.Length; i++)
                 SPacks.Enqueue(arrPack[i]);
-            for (int i = arrPack.Length-1; i < arrPack1.Length; i++)
-                SPacks.Enqueue(arrPack1[i]);   
+            for (int i = arrPack.Length - 1; i < arrPack.Length + arrPack1.Length-1; i++)
+                SPacks.Enqueue(arrPack1[i-arrPack.Length+1]);
             Random rnd = new Random();
             Card[] arrSpacks = SPacks.ToArray();
             Queue<Card> Spack = new Queue<Card>();
@@ -95,6 +101,37 @@ namespace BlackJack
             }
             return Spack;
         }
+    
+        static Card Draw(Queue<Card> Pack)
+        {
+            return Pack.Dequeue();
+        }
 
+        static bool Turn()
+        {
+            //Call ToString Func
+            //Check if Key is pressed
+            ConsoleKeyInfo Pressedkey = Console.ReadKey();
+        WasntPressed:
+            if (Pressedkey.Key == ConsoleKey.NumPad1)
+            {
+                //Call Draw Method
+
+            }
+            else if (Pressedkey.Key == ConsoleKey.NumPad2)
+            {
+                //call method
+            }
+            else
+                goto WasntPressed;
+            
+            return true;
+        }
+
+        static void Menu()
+        {
+            Console.SetCursorPosition(0, 20); Console.WriteLine("Pick An Action:(Press The NumPad) ");
+            Console.Write("Draw Card-1"+"      "+"End Turn -2 ");
+        }
     }
 }
